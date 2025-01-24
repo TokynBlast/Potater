@@ -34,7 +34,7 @@ public class Main {
         });
     }
 
-    public static void Start(String ip, String PKSize, Integer Time, Integer Delay) {
+    public static void Start(String ip, String PKSize, Integer Time, Integer Delay) { // Change to hold text for the stats
         // Start the network stress test
     }
 
@@ -57,6 +57,17 @@ public class Main {
 
         JButton BeginEnd = new JButton();
 
+        JLabel PacketSent = new JLabel();
+        JLabel PacketReceived = new JLabel();
+        JLabel PacketLoss = new JLabel();
+        JLabel TimeLeft = new JLabel();
+
+        PacketSent.setText("Packets Sent: 0");
+        PacketReceived.setText("Packets Received: 0");
+        PacketLoss.setText("Packet Loss: 0%");
+        TimeLeft.setText("Time Left: --:--:--");
+
+
         BeginEnd.setText("Begin");
         BeginEnd.setBounds(385, 100, 90, 25);
 
@@ -73,7 +84,7 @@ public class Main {
                 }
             }
         });
-        
+
         styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets", "192.168.1.1");
         styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65");
         styleTextField(Time,       230, 100, 50, 25,  "Amount of time to send packets for in seconds", "60");
@@ -84,7 +95,7 @@ public class Main {
         window.add(PacketSize);
         window.add(Time);
         window.add(Delay);
-        
+
         window.add(BeginEnd);
     }
 }
