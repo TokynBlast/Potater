@@ -16,7 +16,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setTitle("Javus - Java Network Stressor - v0.0.1");
         window.setVisible(true);
-        window.setSize(500, 500);
+        window.setSize(700, 500);
         window.setLayout(null);
 
         JTextField IP = new JTextField();
@@ -25,9 +25,9 @@ public class Main {
         JTextField Delay = new JTextField();
 
         styleTextField(IP, 10, 100, 140, 25, "IP Address");
-        styleTextField(PacketSize, 10, 150, 140, 25, "Packet Size");
-        styleTextField(Time, 10, 200, 140, 25, "Time (Seconds)");
-        styleTextField(Delay, 10, 250, 140, 25, "Delay (Milliseconds)");
+        styleTextField(PacketSize, 160, 100, 140, 25, "Packet Size");
+        styleTextField(Time, 310, 100, 140, 25, "Time (Seconds)");
+        styleTextField(Delay, 460, 100, 140, 25, "Delay (Milliseconds)");
 
         window.getContentPane().setBackground(new java.awt.Color(247, 183, 21));
         window.add(IP);
