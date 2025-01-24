@@ -1,5 +1,4 @@
-# JavaL
-Network stress testing in Java
+<h2 align='center'>Javus</h2>
+Network stress testing in Java!
 
-THIS IS STILL A WORK IN PROGRESS.
-I am learning Java, as I program this.
+<sub>This was made, to learn Java.</sub>
