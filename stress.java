@@ -1,7 +1,10 @@
-// Java.net
+import java.net;
+import javax.swing.*;
+
 public class stress {
   public static void main(String[] args) {
-    Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
-    // getInetAdresses
+    JFrame window = new JFrame();
+    window.setTitle("JavaS - Java Net Stress Test");
+    window.setVisible(true);
   }
 }
