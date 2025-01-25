@@ -40,7 +40,7 @@ public class Javus {
             DatagramSocket door = new DatagramSocket();
             byte[] buffer = "Hello From Javus :)".getBytes();
             InetAddress address = InetAddress.getByName(ip);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 12345); // Assuming port 12345
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 42069);
             door.send(packet);
             door.close();
 
