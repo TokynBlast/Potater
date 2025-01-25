@@ -1,6 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.net.*;
+
 import javax.swing.*;
 
 public class Main {
@@ -80,22 +82,6 @@ public class Main {
         attack.addItem("Custom");
         attack.addItem("Self");
         attack.addItem("WiFi");
-        
-        if (attack.getSelectedItem().equals("Custom")) {
-            IP.setText("192.168.1.1");
-        }
-
-        else if (attack.getSelectedItem().equals("Wifi")) {
-            IP.setEditable(true);
-            IP.setText("WiFi");
-            IP.setEditable(false);
-        }
-
-        else if (attack.getSelectedItem().equals("Self")) {
-            IP.setEditable(true);
-            IP.setText("127.0.0.1");
-            IP.setEditable(false);
-        }
 
         BeginEnd.addActionListener(new ActionListener()  {
             @Override
@@ -107,6 +93,28 @@ public class Main {
                 else if (BeginEnd.getText().equals("Stop")) {
                     BeginEnd.setText("Begin");
                     Stop();
+                }
+            }
+        });
+
+        attack.addActionListener(new ActionListener()  {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (attack.getSelectedItem().equals("Custom")) {
+                    IP.setEditable(true);
+                    IP.setText("192.168.1.1");
+                }
+
+                else if (attack.getSelectedItem().equals("WiFi")) {
+                    IP.setEditable(true);
+                    IP.setText("WiFi");
+                    IP.setEditable(false);
+                }
+
+                else if (attack.getSelectedItem().equals("Self")) {
+                    IP.setEditable(true);
+                    IP.setText("127.0.0.1");
+                    IP.setEditable(false);
                 }
             }
         });
