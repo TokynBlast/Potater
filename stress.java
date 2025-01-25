@@ -105,8 +105,10 @@ public class Javus {
                 try {
                     Enumeration Net = NetworkInterface.getNetworkInterfaces();
                     while (Net.hasMoreElements()) {
-                        Object currentInterface = Net.nextElement();
-                        System.out.println(currentInterface);
+                        NetworkInterface currentInterface = (NetworkInterface) Net.nextElement();
+                        if (currentInterface.isUp() && !currentInterface.isLoopback() && !currentInterface.isVirtual() && !currentInterface.isPointToPoint() && currentInterface.getInterfaceAddresses().stream().anyMatch(addr -> addr.getAddress() instanceof Inet4Address)) {
+                            System.out.println(currentInterface);
+                        }
                     }
                     IP.setText("WiFi");
                     IP.setEditable(false);
@@ -115,7 +117,6 @@ public class Javus {
                 } catch (SocketException ex) {
                     IP.setText("No WiFi");
                     IP.setEditable(false);
-                    ex.printStackTrace();
                 } finally {}
             }
                 else if (attack.getSelectedItem().equals("Self")) {
