@@ -1,11 +1,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.net.*;
-
+import java.util.Enumeration;
 import javax.swing.*;
 
-public class Main {
+public class Javus {
 
     public static void styleTextField(JTextField textField, Integer x, Integer y, Integer width, Integer height, String tipText, String placeHolder) {
         textField.setBounds(x, y, width, height);
@@ -71,7 +70,6 @@ public class Main {
         PacketLoss.setText("Packet Loss: 0%");
         TimeLeft.setText("Time Left: --:--:--");
 
-
         BeginEnd.setText("Begin");
         BeginEnd.setBounds(385, 100, 90, 25);
 
@@ -104,18 +102,28 @@ public class Main {
                 }
 
                 else if (attack.getSelectedItem().equals("WiFi")) {
-                    IP.setEditable(true);
+                try {
+                    Enumeration Net = NetworkInterface.getNetworkInterfaces();
+                    while (Net.hasMoreElements()) {
+                        Object currentInterface = Net.nextElement();
+                        System.out.println(currentInterface);
+                    }
                     IP.setText("WiFi");
                     IP.setEditable(false);
-                }
+                    System.out.println(Net);
 
+                } catch (SocketException ex) {
+                    IP.setText("No WiFi");
+                    IP.setEditable(false);
+                    ex.printStackTrace();
+                } finally {}
+            }
                 else if (attack.getSelectedItem().equals("Self")) {
-                    IP.setEditable(true);
                     IP.setText("127.0.0.1");
                     IP.setEditable(false);
                 }
-            }
-        });
+        }
+    });
 
 
         styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets to", "192.168.1.1");
