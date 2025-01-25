@@ -52,11 +52,7 @@ public class Main {
 
         JComboBox attack = new JComboBox< >();
 
-        attack.setBounds(0, 0, 90, 40);
-
-        attack.addItem("Self");
-        attack.addItem("WiFi");
-        attack.addItem("Custom");
+        // JLabel RealIP = new JLabel(); /// If IP is WiFi or Self, it will get the IP here.
 
         JTextField IP = new JTextField();
         JTextField PacketSize = new JTextField();
@@ -79,6 +75,28 @@ public class Main {
         BeginEnd.setText("Begin");
         BeginEnd.setBounds(385, 100, 90, 25);
 
+        
+        attack.setBounds(0, 0, 90, 40);
+        attack.addItem("Custom");
+        attack.addItem("Self");
+        attack.addItem("WiFi");
+        
+        if (attack.getSelectedItem().equals("Custom")) {
+            IP.setText("192.168.1.1");
+        }
+
+        else if (attack.getSelectedItem().equals("Wifi")) {
+            IP.setEditable(true);
+            IP.setText("WiFi");
+            IP.setEditable(false);
+        }
+
+        else if (attack.getSelectedItem().equals("Self")) {
+            IP.setEditable(true);
+            IP.setText("127.0.0.1");
+            IP.setEditable(false);
+        }
+
         BeginEnd.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,17 +111,18 @@ public class Main {
             }
         });
 
+
         styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets to", "192.168.1.1");
         styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65");
         styleTextField(Time,       230, 100, 50, 25,  "Amount of time to send packets for in seconds", "60");
         styleTextField(Delay,      295, 100, 70, 25,  "Delay between sending packets in seconds", "1000");
 
         window.getContentPane().setBackground(new java.awt.Color(247, 183, 21));
-        window.add(IP);
         window.add(PacketSize);
         window.add(Time);
         window.add(Delay);
-
+        window.add(IP);
+        
         window.add(attack);
 
         window.add(BeginEnd);
