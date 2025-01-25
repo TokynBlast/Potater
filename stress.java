@@ -50,7 +50,7 @@ public class Javus {
         window.setSize(500, 500);
         window.setLayout(null);
 
-        JComboBox attack = new JComboBox< >();
+        JComboBox<String> attack = new JComboBox<>();
 
         JTextField IP = new JTextField();
         JTextField PacketSize = new JTextField();
@@ -124,7 +124,7 @@ public class Javus {
 
 
         styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets to", "192.168.1.1");
-        styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65");
+        styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65"); // NEED TO ADD java.net.getMTU() TO PREVENT FRAGMENTING!! (With option for fragmenting if user wants it)
         styleTextField(Time,       230, 100, 50, 25,  "Amount of time to send packets for in seconds", "60");
         styleTextField(Delay,      295, 100, 70, 25,  "Delay between sending packets in seconds", "1000");
 
