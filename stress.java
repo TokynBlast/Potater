@@ -50,6 +50,14 @@ public class Main {
         window.setSize(500, 500);
         window.setLayout(null);
 
+        JComboBox attack = new JComboBox< >();
+
+        attack.setBounds(0, 0, 90, 40);
+
+        attack.addItem("Self");
+        attack.addItem("WiFi");
+        attack.addItem("Custom");
+
         JTextField IP = new JTextField();
         JTextField PacketSize = new JTextField();
         JTextField Time = new JTextField();
@@ -85,16 +93,18 @@ public class Main {
             }
         });
 
-        styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets", "192.168.1.1");
+        styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets to", "192.168.1.1");
         styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65");
         styleTextField(Time,       230, 100, 50, 25,  "Amount of time to send packets for in seconds", "60");
-        styleTextField(Delay,      295, 100, 70, 25,  "Delay between packets in seconds", "1000");
+        styleTextField(Delay,      295, 100, 70, 25,  "Delay between sending packets in seconds", "1000");
 
         window.getContentPane().setBackground(new java.awt.Color(247, 183, 21));
         window.add(IP);
         window.add(PacketSize);
         window.add(Time);
         window.add(Delay);
+
+        window.add(attack);
 
         window.add(BeginEnd);
     }
