@@ -1,5 +1,4 @@
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.*;
 import java.util.Enumeration;
 import javax.swing.*;
@@ -79,35 +78,33 @@ public class Javus {
         attack.addItem("Self");
         attack.addItem("WiFi");
 
-        BeginEnd.addActionListener(new ActionListener()  {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (BeginEnd.getText().equals("Begin")) {
-                    BeginEnd.setText("Stop");
-                    Start(IP.getText(), PacketSize.getText(), Integer.parseInt(Time.getText()), Integer.parseInt(Delay.getText()));
-                }
-                else if (BeginEnd.getText().equals("Stop")) {
-                    BeginEnd.setText("Begin");
-                    Stop();
-                }
+        BeginEnd.addActionListener((ActionEvent e) -> {
+            if (BeginEnd.getText().equals("Begin")) {
+                BeginEnd.setText("Stop");
+                Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()));
+            }
+            else if (BeginEnd.getText().equals("Stop")) {
+                BeginEnd.setText("Begin");
+                Stop();
             }
         });
 
-        attack.addActionListener(new ActionListener()  {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (attack.getSelectedItem().equals("Custom")) {
-                    IP.setEditable(true);
-                    IP.setText("192.168.1.1");
-                }
-
-                else if (attack.getSelectedItem().equals("WiFi")) {
+        attack.addActionListener((ActionEvent e) -> {
+            if (attack.getSelectedItem().equals("Custom")) {
+                IP.setEditable(true);
+                IP.setText("192.168.1.1");
+            }
+            
+            else if (attack.getSelectedItem().equals("WiFi")) {
                 try {
                     Enumeration Net = NetworkInterface.getNetworkInterfaces();
                     while (Net.hasMoreElements()) {
                         NetworkInterface currentInterface = (NetworkInterface) Net.nextElement();
                         if (currentInterface.isUp() && !currentInterface.isLoopback() && !currentInterface.isVirtual() && !currentInterface.isPointToPoint() && currentInterface.getInterfaceAddresses().stream().anyMatch(addr -> addr.getAddress() instanceof Inet4Address)) {
-                            System.out.println(currentInterface);
+                            String displayName = currentInterface.getDisplayName().toLowerCase();
+                            if (!displayName.contains("virtual") && !displayName.contains("vmware") && !displayName.contains("vbox")) {
+                                System.out.println(currentInterface);
+                            }
                         }
                     }
                     IP.setText("WiFi");
@@ -119,12 +116,11 @@ public class Javus {
                     IP.setEditable(false);
                 } finally {}
             }
-                else if (attack.getSelectedItem().equals("Self")) {
-                    IP.setText("127.0.0.1");
-                    IP.setEditable(false);
-                }
-        }
-    });
+            else if (attack.getSelectedItem().equals("Self")) {
+                IP.setText("127.0.0.1");
+                IP.setEditable(false);
+            }
+        });
 
 
         styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets to", "192.168.1.1");
