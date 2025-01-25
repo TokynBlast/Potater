@@ -54,8 +54,6 @@ public class Main {
 
         JComboBox attack = new JComboBox< >();
 
-        // JLabel RealIP = new JLabel(); /// If IP is WiFi or Self, it will get the IP here.
-
         JTextField IP = new JTextField();
         JTextField PacketSize = new JTextField();
         JTextField Time = new JTextField();
