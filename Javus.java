@@ -1,4 +1,5 @@
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
 import javax.swing.*;
@@ -34,8 +35,19 @@ public class Javus {
         });
     }
 
-    public static void Start(String ip, String PKSize, Integer Time, Integer Delay) { // Change to hold text for the stats
-        // Start the network stress test
+    public static void Start(String ip, String PKSize, Integer Time, Integer Delay) throws IOException {
+        try {
+            DatagramSocket door = new DatagramSocket();
+            byte[] buffer = "Hello From Javus :)".getBytes();
+            InetAddress address = InetAddress.getByName(ip);
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 12345); // Assuming port 12345
+            door.send(packet);
+            door.close();
+
+        } catch (SocketException ex) {
+            System.out.println("Error: " + ex);
+            System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
+        } finally {}
     }
 
     public static void Stop() {
@@ -81,7 +93,12 @@ public class Javus {
         BeginEnd.addActionListener((ActionEvent e) -> {
             if (BeginEnd.getText().equals("Begin")) {
                 BeginEnd.setText("Stop");
-                Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()));
+                try {
+                    Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()));
+                } catch (IOException ex) {
+                    System.out.println("Error: " + ex);
+                   System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
+                }
             }
             else if (BeginEnd.getText().equals("Stop")) {
                 BeginEnd.setText("Begin");
@@ -106,12 +123,12 @@ public class Javus {
                             if (!displayName.contains("virtual") && !displayName.contains("vmware") && !displayName.contains("vbox")) {
                                 if (addresses.hasMoreElements()) {
                                     InetAddress address = (InetAddress) addresses.nextElement();
-                                    System.out.println(address);
+                                    IP.setText(address.getHostAddress());
                                 }
                             }
                         }
                     }
-                    IP.setText("WiFi");
+                    
                     IP.setEditable(false);
 
                 } catch (SocketException ex) {
