@@ -100,16 +100,19 @@ public class Javus {
                     Enumeration Net = NetworkInterface.getNetworkInterfaces();
                     while (Net.hasMoreElements()) {
                         NetworkInterface currentInterface = (NetworkInterface) Net.nextElement();
-                        if (currentInterface.isUp() && !currentInterface.isLoopback() && !currentInterface.isVirtual() && !currentInterface.isPointToPoint() && currentInterface.getInterfaceAddresses().stream().anyMatch(addr -> addr.getAddress() instanceof Inet4Address)) {
+                        Enumeration addresses = currentInterface.getInetAddresses();
+                        if (currentInterface.isUp() && !currentInterface.isLoopback() && !currentInterface.isVirtual() && !currentInterface.isPointToPoint()) {
                             String displayName = currentInterface.getDisplayName().toLowerCase();
                             if (!displayName.contains("virtual") && !displayName.contains("vmware") && !displayName.contains("vbox")) {
-                                System.out.println(currentInterface);
+                                if (addresses.hasMoreElements()) {
+                                    InetAddress address = (InetAddress) addresses.nextElement();
+                                    System.out.println(address);
+                                }
                             }
                         }
                     }
                     IP.setText("WiFi");
                     IP.setEditable(false);
-                    System.out.println(Net);
 
                 } catch (SocketException ex) {
                     IP.setText("No WiFi");
