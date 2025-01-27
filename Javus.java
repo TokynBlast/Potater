@@ -38,7 +38,7 @@ public class Javus {
         });
     }
 
-    public static void Start(String ip, String PKSize, Integer Time, Integer Delay) throws IOException, InterruptedException {
+    public static void Start(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
         try {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
@@ -155,7 +155,7 @@ public class Javus {
             if (BeginEnd.getText().equals("Begin")) {
                 BeginEnd.setText("Stop");
                 try {
-                    Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()));
+                    Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()), dataType.getSelectedItem().toString());
                 } catch (IOException ex) {
                     System.out.println("Error on line 115: " + ex);
                    System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
