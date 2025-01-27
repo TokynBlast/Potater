@@ -38,7 +38,7 @@ public class Javus {
         });
     }
 
-    public static void Start(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
+    public static void UDP(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
         try {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
@@ -103,6 +103,26 @@ public class Javus {
             System.out.println("Error 64: " + ex);
             System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
         } finally {}
+    }
+
+    public static void TCP(String ip, String PKSize, Integer Time, Integer Delay, String Type){
+        
+    }
+
+    public static void ICMP(String ip, String PKSize, Integer Time, Integer Delay, String Type){
+        
+    }
+    
+    public static void UDP(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
+        if (type.equals("UDP")) {
+            UDP(ip, PKSize, Time, Delay, Type)
+        }
+        else if (type.equals("TCP")) {
+            TCP(ip, PKSize, Time, Delay, Type)
+        }
+        else if (type.equals("ICMP")) {
+            ICMP(ip, PKSize, Time, Delay, Type)
+        }
     }
 
     public static void Stop() {
