@@ -7,6 +7,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
+// Error formatting: e[error #][exceptioninitials]
+
 public class Javus {
 
     public static void styleTextField(JTextField textField, Integer x, Integer y, Integer width, Integer height, String tipText, String placeHolder) {
@@ -38,7 +40,7 @@ public class Javus {
         });
     }
 
-    public static void Start(String ip, String PKSize, Integer Time, Integer Delay) throws IOException, InterruptedException {
+    public static void UDP(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
         try {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
@@ -78,7 +80,7 @@ public class Javus {
                         }
                     }
                 }
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 42069); // Assuming port 12345
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 42069);
                 ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
                 Runnable task = () -> {
                     try {
@@ -87,7 +89,8 @@ public class Javus {
                             door.send(packet);
                         }
                     } catch (IOException ex) {
-                        System.out.println("Error on 55: " + ex);
+                        System.out.println("Error e1IO: " + ex);
+                        System.out.println("\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
                     }
                 };
                 if (Delay >= 0) {
@@ -98,11 +101,30 @@ public class Javus {
                 }
                 executor.shutdown();
             } finally {}
-
         } catch (SocketException ex) {
-            System.out.println("Error 64: " + ex);
+            System.out.println("Error e2SE: " + ex);
             System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
         } finally {}
+    }
+
+    public static void TCP(String ip, String PKSize, Integer Time, Integer Delay, String Type){
+
+    }
+
+    public static void ICMP(String ip, String PKSize, Integer Time, Integer Delay, String Type){
+
+    }
+
+    public static void Start(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
+        if (Type.equals("UDP")) {
+            UDP(ip, PKSize, Time, Delay, Type);
+        }
+        else if (Type.equals("TCP")) {
+            TCP(ip, PKSize, Time, Delay, Type);
+        }
+        else if (Type.equals("ICMP")) {
+            ICMP(ip, PKSize, Time, Delay, Type);
+        }
     }
 
     public static void Stop() {
@@ -111,7 +133,7 @@ public class Javus {
 
     public static void main(String[] args) {
         JFrame window = new JFrame();
-        window.setTitle("Javus - Java Network Stressor - v0.0.1");
+        window.setTitle("Javus - Java Network Stressor - v0.1.0");
         window.setVisible(true);
         window.setResizable(false);
         window.setSize(500, 500);
@@ -140,7 +162,7 @@ public class Javus {
         BeginEnd.setText("Begin");
         BeginEnd.setBounds(385, 100, 90, 25);
 
-        
+
         attack.setBounds(0, 0, 90, 40);
         attack.addItem("Custom");
         attack.addItem("Self");
@@ -155,9 +177,9 @@ public class Javus {
             if (BeginEnd.getText().equals("Begin")) {
                 BeginEnd.setText("Stop");
                 try {
-                    Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()));
+                    Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()), dataType.getSelectedItem().toString());
                 } catch (IOException ex) {
-                    System.out.println("Error on line 115: " + ex);
+                    System.out.println("Error e3IO: " + ex);
                    System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
                 } catch (InterruptedException ex) {}
             }
@@ -172,7 +194,7 @@ public class Javus {
                 IP.setEditable(true);
                 IP.setText("192.168.1.1");
             }
-            
+
             else if (attack.getSelectedItem().equals("WiFi")) {
                 try {
                     Enumeration<NetworkInterface> Net = NetworkInterface.getNetworkInterfaces();
@@ -196,7 +218,7 @@ public class Javus {
                             }
                         }
                     }
-                    
+
                     IP.setEditable(false);
 
                 } catch (SocketException ex) {
@@ -205,13 +227,13 @@ public class Javus {
                 } finally {}
             }
             else if (attack.getSelectedItem().equals("Self")) {
-                IP.setText("127.0.0.1");
+                IP.setText("::1");
                 IP.setEditable(false);
             }
         });
 
 
-        styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets to", "192.168.1.1");
+        styleTextField(IP,         10,  100, 140, 25, "IP address to send packets to", "192.168.1.1");
         styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65"); // NEED TO ADD java.net.getMTU() TO PREVENT FRAGMENTING!! (With option for fragmenting if user wants it)
         styleTextField(Time,       230, 100, 50, 25,  "Amount of time to send packets for in seconds", "60");
         styleTextField(Delay,      295, 100, 70, 25,  "Delay between sending packets in seconds", "1000");
@@ -221,7 +243,7 @@ public class Javus {
         window.add(Time);
         window.add(Delay);
         window.add(IP);
-        
+
         window.add(attack);
         window.add(dataType);
 
