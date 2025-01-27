@@ -134,7 +134,7 @@ public class Main {
     public static void main(String[] args) {
         JFrame window = new JFrame();
         window.setTitle("Javus - Java Network Stressor - v0.1.0");
-        window.setVisible(true);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setSize(500, 500);
         window.setLayout(null);
@@ -154,6 +154,11 @@ public class Main {
         JLabel PacketLoss = new JLabel();
         JLabel TimeLeft = new JLabel();
 
+        JCheckBox Fragging = new JCheckBox();
+
+
+        Fragging.setText("Allow fraggmenting?");
+
         PacketSent.setText("Packets Sent: 0");
         PacketReceived.setText("Packets Received: 0");
         PacketLoss.setText("Packet Loss: 0%");
@@ -168,7 +173,7 @@ public class Main {
         attack.addItem("Self");
         attack.addItem("WiFi");
 
-        dataType.setBounds(0, 0, 90, 40);
+        dataType.setBounds(100, 0, 90, 40);
         dataType.addItem("UDP");
         dataType.addItem("TCP");
         dataType.addItem("ICMP");
@@ -248,5 +253,7 @@ public class Main {
         window.add(dataType);
 
         window.add(BeginEnd);
+
+        window.setVisible(true);
     }
 }
