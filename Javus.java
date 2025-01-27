@@ -111,7 +111,7 @@ public class Javus {
 
     public static void main(String[] args) {
         JFrame window = new JFrame();
-        window.setTitle("Javus - Java Network Stressor - v0.0.1");
+        window.setTitle("Javus - Java Network Stressor - v0.1.0");
         window.setVisible(true);
         window.setResizable(false);
         window.setSize(500, 500);
