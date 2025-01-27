@@ -7,7 +7,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
-public class Javus {
+// Error formatting: e[error #][exceptioninitials]
+
+public class Main {
 
     public static void styleTextField(JTextField textField, Integer x, Integer y, Integer width, Integer height, String tipText, String placeHolder) {
         textField.setBounds(x, y, width, height);
@@ -87,7 +89,8 @@ public class Javus {
                             door.send(packet);
                         }
                     } catch (IOException ex) {
-                        System.out.println("Error on 55: " + ex);
+                        System.out.println("Error e1IO: " + ex);
+                        System.out.println("\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
                     }
                 };
                 if (Delay >= 0) {
@@ -98,30 +101,29 @@ public class Javus {
                 }
                 executor.shutdown();
             } finally {}
-
         } catch (SocketException ex) {
-            System.out.println("Error 64: " + ex);
+            System.out.println("Error e2SE: " + ex);
             System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
         } finally {}
     }
 
     public static void TCP(String ip, String PKSize, Integer Time, Integer Delay, String Type){
-        
+
     }
 
     public static void ICMP(String ip, String PKSize, Integer Time, Integer Delay, String Type){
-        
+
     }
-    
+
     public static void Start(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
-        if (type.equals("UDP")) {
-            UDP(ip, PKSize, Time, Delay, Type)
+        if (Type.equals("UDP")) {
+            UDP(ip, PKSize, Time, Delay, Type);
         }
-        else if (type.equals("TCP")) {
-            TCP(ip, PKSize, Time, Delay, Type)
+        else if (Type.equals("TCP")) {
+            TCP(ip, PKSize, Time, Delay, Type);
         }
-        else if (type.equals("ICMP")) {
-            ICMP(ip, PKSize, Time, Delay, Type)
+        else if (Type.equals("ICMP")) {
+            ICMP(ip, PKSize, Time, Delay, Type);
         }
     }
 
@@ -160,7 +162,7 @@ public class Javus {
         BeginEnd.setText("Begin");
         BeginEnd.setBounds(385, 100, 90, 25);
 
-        
+
         attack.setBounds(0, 0, 90, 40);
         attack.addItem("Custom");
         attack.addItem("Self");
@@ -177,7 +179,7 @@ public class Javus {
                 try {
                     Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()), dataType.getSelectedItem().toString());
                 } catch (IOException ex) {
-                    System.out.println("Error on line 115: " + ex);
+                    System.out.println("Error e3IO: " + ex);
                    System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
                 } catch (InterruptedException ex) {}
             }
@@ -192,7 +194,7 @@ public class Javus {
                 IP.setEditable(true);
                 IP.setText("192.168.1.1");
             }
-            
+
             else if (attack.getSelectedItem().equals("WiFi")) {
                 try {
                     Enumeration<NetworkInterface> Net = NetworkInterface.getNetworkInterfaces();
@@ -216,7 +218,7 @@ public class Javus {
                             }
                         }
                     }
-                    
+
                     IP.setEditable(false);
 
                 } catch (SocketException ex) {
@@ -231,7 +233,7 @@ public class Javus {
         });
 
 
-        styleTextField(IP,         10,  100, 140, 25, "IPv4 adress to send packets to", "192.168.1.1");
+        styleTextField(IP,         10,  100, 140, 25, "IP address to send packets to", "192.168.1.1");
         styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65"); // NEED TO ADD java.net.getMTU() TO PREVENT FRAGMENTING!! (With option for fragmenting if user wants it)
         styleTextField(Time,       230, 100, 50, 25,  "Amount of time to send packets for in seconds", "60");
         styleTextField(Delay,      295, 100, 70, 25,  "Delay between sending packets in seconds", "1000");
@@ -241,7 +243,7 @@ public class Javus {
         window.add(Time);
         window.add(Delay);
         window.add(IP);
-        
+
         window.add(attack);
         window.add(dataType);
 
