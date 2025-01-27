@@ -225,7 +225,7 @@ public class Javus {
                 } finally {}
             }
             else if (attack.getSelectedItem().equals("Self")) {
-                IP.setText("127.0.0.1");
+                IP.setText("::1");
                 IP.setEditable(false);
             }
         });
