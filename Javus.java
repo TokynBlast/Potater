@@ -113,7 +113,7 @@ public class Javus {
         
     }
     
-    public static void UDP(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
+    public static void Start(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
         if (type.equals("UDP")) {
             UDP(ip, PKSize, Time, Delay, Type)
         }
