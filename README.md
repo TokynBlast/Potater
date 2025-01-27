@@ -8,7 +8,7 @@ You only have to run the program.<br>
 There are attack types and targets.
 The targets are <code>Custom</code>, <code>Self</code>, <code>WiFi</code><br>
 Custom defaults at 192.168.1.1, to prevent overloading anything, the data is instantly denied.<br>
-Self is ::1:, the IPv6 of 127.0.0.1   // THERE MAY BE AN ERROR; IT MAY BE ::1 AND NOT ::1:<br>
+Self is ::1, the IPv6 of 127.0.0.1<br>
 And WiFi gets the IP of the WiFi, and selects the first one.
 
 <h2>Bug Reporting</h2>
