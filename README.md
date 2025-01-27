@@ -12,7 +12,7 @@ Self is ::1, the IPv6 of 127.0.0.1<br>
 And WiFi gets the IP of the WiFi, and selects the first one.
 
 <h2>Bug Reporting</h2>
-There are many possible bugs. This isn't a v1 program. It is a v0.2 program.<br>
+There are many possible bugs. This isn't a v1 program. It is a v0.1 program.<br>
 Anything that doesn't work as expected, report to: <a href='https://github.com/TokynBlast/Javus/issues'>Gihub Javus Issues</a>
 
 <sub>The original purpose of this was to learn Java.</sub>
