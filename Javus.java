@@ -155,7 +155,7 @@ public class Main {
         JLabel TimeLeft = new JLabel();
 
         JCheckBox Fragging = new JCheckBox();
-
+        JCheckBox TermDebugging = new JCheckBox(); // Print lines to the terminal, as they go inside the terminal inside the Javus window.
 
         Fragging.setText("Allow fraggmenting?");
 
