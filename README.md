@@ -3,6 +3,9 @@
 <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&duration=2500&pause=300&color=F7B715&center=true&width=750&height=80&lines=Network+Stress+Testing;Made+in+Java;v0.1.0-Beta" alt="Typing SVG" /></a>
 </p>
 
+> [!WARNING]
+> THIS IS BETA; FEATURES MAY NOT WORK AS EXPECTED.
+
 <h2>Set Up</h2>
 You only have to run the program.<br>
 There are attack types and targets.
