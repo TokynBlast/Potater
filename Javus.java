@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.*;
@@ -5,9 +7,10 @@ import java.util.Enumeration;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import javax.swing.*;
+import java.util.ArrayList;
 
 // Error formatting: e[error #][exceptioninitials]
+
 
 public class Javus {
 
@@ -40,7 +43,8 @@ public class Javus {
         });
     }
 
-    public static void UDP(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
+    public static void UDP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal) throws IOException, InterruptedException {
+
         try {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
@@ -89,6 +93,9 @@ public class Javus {
                             door.send(packet);
                         }
                     } catch (IOException ex) {
+
+                        addText(Terminal, "Error e1IO: " + ex + "\nPlease fill out a bug report here:\ngithub.com/TokynBlast/Javus/issues");
+
                         System.out.println("Error e1IO: " + ex);
                         System.out.println("\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
                     }
@@ -102,28 +109,29 @@ public class Javus {
                 executor.shutdown();
             } finally {}
         } catch (SocketException ex) {
-            System.out.println("Error e2SE: " + ex);
-            System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
+
+            addText(Terminal, "Error e2SE: " + ex + "\nPlease fill out a bug report here:\ngithub.com/TokynBlast/Javus/issues");
         } finally {}
     }
 
-    public static void TCP(String ip, String PKSize, Integer Time, Integer Delay, String Type){
+    public static void TCP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal){
 
     }
 
-    public static void ICMP(String ip, String PKSize, Integer Time, Integer Delay, String Type){
+    public static void ICMP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal){
 
     }
 
-    public static void Start(String ip, String PKSize, Integer Time, Integer Delay, String Type) throws IOException, InterruptedException {
+    public static void Start(String ip, Integer PKSize, Integer Time, Integer Delay, String Type, JLabel Terminal) throws IOException, InterruptedException {
         if (Type.equals("UDP")) {
-            UDP(ip, PKSize, Time, Delay, Type);
+            UDP(ip, PKSize, Time, Delay, Terminal);
         }
         else if (Type.equals("TCP")) {
-            TCP(ip, PKSize, Time, Delay, Type);
+            TCP(ip, PKSize, Time, Delay, Terminal);
         }
         else if (Type.equals("ICMP")) {
-            ICMP(ip, PKSize, Time, Delay, Type);
+            ICMP(ip, PKSize, Time, Delay, Terminal);
+
         }
     }
 
@@ -131,10 +139,28 @@ public class Javus {
         // Stop the network stress test
     }
 
+    private static ArrayList<String> textLines = new ArrayList<>();
+
+    public static void addText(JLabel label, String newText) {
+        textLines.add(newText);
+        while (textLines.size() > 5) {
+            textLines.remove(0);
+        }
+        StringBuilder sb = new StringBuilder("<html>");
+        for (String line : textLines) {
+            sb.append(line).append("<br>");
+        }
+        sb.append("</html>");
+        label.setText(sb.toString());
+    }
+
+    
     public static void main(String[] args) {
         JFrame window = new JFrame();
         window.setTitle("Javus - Java Network Stressor - v0.1.0");
-        window.setVisible(true);
+
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         window.setResizable(false);
         window.setSize(500, 500);
         window.setLayout(null);
@@ -154,6 +180,21 @@ public class Javus {
         JLabel PacketLoss = new JLabel();
         JLabel TimeLeft = new JLabel();
 
+        JCheckBox Fragging = new JCheckBox();
+        JCheckBox TermDebugging = new JCheckBox(); // Print lines to the terminal, as they go inside the terminal inside the Javus window.
+
+        JLabel term = new JLabel();
+        term.setOpaque(true);
+        term.setBounds(50, 250, 400, 200);
+        term.setBackground(Color.BLACK);
+        term.setForeground(Color.WHITE);
+        term.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        term.setVerticalAlignment(SwingConstants.BOTTOM);
+        term.setHorizontalAlignment(SwingConstants.LEFT);
+
+        
+        Fragging.setText("Allow fraggmenting?");
+
         PacketSent.setText("Packets Sent: 0");
         PacketReceived.setText("Packets Received: 0");
         PacketLoss.setText("Packet Loss: 0%");
@@ -168,7 +209,7 @@ public class Javus {
         attack.addItem("Self");
         attack.addItem("WiFi");
 
-        dataType.setBounds(0, 0, 90, 40);
+        dataType.setBounds(100, 0, 90, 40);
         dataType.addItem("UDP");
         dataType.addItem("TCP");
         dataType.addItem("ICMP");
@@ -177,10 +218,10 @@ public class Javus {
             if (BeginEnd.getText().equals("Begin")) {
                 BeginEnd.setText("Stop");
                 try {
-                    Start(IP.getText(), PacketSize.getText(), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()), dataType.getSelectedItem().toString());
+                    Start(IP.getText(), Integer.parseInt(PacketSize.getText()), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()), dataType.getSelectedItem().toString(), term);
                 } catch (IOException ex) {
-                    System.out.println("Error e3IO: " + ex);
-                   System.out.println("\n\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
+                    addText(term, "Error e3IO: " + ex + "\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
+                  
                 } catch (InterruptedException ex) {}
             }
             else if (BeginEnd.getText().equals("Stop")) {
@@ -197,6 +238,7 @@ public class Javus {
 
             else if (attack.getSelectedItem().equals("WiFi")) {
                 try {
+                    // String name_ = "";
                     Enumeration<NetworkInterface> Net = NetworkInterface.getNetworkInterfaces();
                     while (Net.hasMoreElements()) {
                         NetworkInterface currentInterface = Net.nextElement();
@@ -207,6 +249,7 @@ public class Javus {
                                 if (addresses.hasMoreElements()) {
                                     InetAddress address = addresses.nextElement();
                                     String ipAddress = address.getHostAddress();
+                                    // name_ = currentInterface.getName(); // Needs to get WiFi Name, not type.
                                     if (address instanceof Inet6Address) {
                                         ipAddress = ipAddress.split("%")[0]; // Remove anything after %
                                         ipAddress = ipAddress.replaceAll("[^0-9a-fA-F:]", ""); // Remove anything not a colon, number or character
@@ -220,10 +263,12 @@ public class Javus {
                     }
 
                     IP.setEditable(false);
+                    addText(term, "Successfully Grabbed WiFi IP: "); // + name_
 
                 } catch (SocketException ex) {
                     IP.setText("No WiFi");
                     IP.setEditable(false);
+                    addText(term, "Couldn't find WiFi IP.");
                 } finally {}
             }
             else if (attack.getSelectedItem().equals("Self")) {
@@ -248,5 +293,11 @@ public class Javus {
         window.add(dataType);
 
         window.add(BeginEnd);
+
+        window.add(term);
+        
+        addText(term, "Successfully started Javus!");
+
+        window.setVisible(true);
     }
 }
