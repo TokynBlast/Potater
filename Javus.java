@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 // Error formatting: e[error #][exceptioninitials]
 
-public class Main {
+
+public class Javus {
 
     public static void styleTextField(JTextField textField, Integer x, Integer y, Integer width, Integer height, String tipText, String placeHolder) {
         textField.setBounds(x, y, width, height);
@@ -43,6 +44,7 @@ public class Main {
     }
 
     public static void UDP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal) throws IOException, InterruptedException {
+
         try {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
@@ -91,7 +93,11 @@ public class Main {
                             door.send(packet);
                         }
                     } catch (IOException ex) {
+
                         addText(Terminal, "Error e1IO: " + ex + "\nPlease fill out a bug report here:\ngithub.com/TokynBlast/Javus/issues");
+
+                        System.out.println("Error e1IO: " + ex);
+                        System.out.println("\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
                     }
                 };
                 if (Delay >= 0) {
@@ -103,6 +109,7 @@ public class Main {
                 executor.shutdown();
             } finally {}
         } catch (SocketException ex) {
+
             addText(Terminal, "Error e2SE: " + ex + "\nPlease fill out a bug report here:\ngithub.com/TokynBlast/Javus/issues");
         } finally {}
     }
@@ -124,6 +131,7 @@ public class Main {
         }
         else if (Type.equals("ICMP")) {
             ICMP(ip, PKSize, Time, Delay, Terminal);
+
         }
     }
 
@@ -150,7 +158,9 @@ public class Main {
     public static void main(String[] args) {
         JFrame window = new JFrame();
         window.setTitle("Javus - Java Network Stressor - v0.1.0");
+
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         window.setResizable(false);
         window.setSize(500, 500);
         window.setLayout(null);
@@ -211,6 +221,7 @@ public class Main {
                     Start(IP.getText(), Integer.parseInt(PacketSize.getText()), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()), dataType.getSelectedItem().toString(), term);
                 } catch (IOException ex) {
                     addText(term, "Error e3IO: " + ex + "\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
+                  
                 } catch (InterruptedException ex) {}
             }
             else if (BeginEnd.getText().equals("Stop")) {
