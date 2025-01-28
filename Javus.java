@@ -96,8 +96,6 @@ public class Javus {
 
                         addText(Terminal, "Error e1IO: " + ex + "\nPlease fill out a bug report here:\ngithub.com/TokynBlast/Javus/issues");
 
-                        System.out.println("Error e1IO: " + ex);
-                        System.out.println("\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
                     }
                 };
                 if (Delay >= 0) {
