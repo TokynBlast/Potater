@@ -1,6 +1,6 @@
 <h2 align='center'>Javus</h2>
 <p align='center'>
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&duration=2500&pause=300&color=F7B715&center=true&width=750&height=80&lines=Network+Stress+Testing;Made+in+Java;v0.1.0" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&duration=2500&pause=300&color=F7B715&center=true&width=750&height=80&lines=Network+Stress+Testing;Made+in+Java;v0.1.1" alt="Typing SVG" /></a>
 </p>
 
 <h2>Set Up</h2>
@@ -12,7 +12,7 @@ Self is ::1, the IPv6 of 127.0.0.1<br>
 And WiFi gets the IP of the WiFi, and selects the first one.
 
 <h2>Bug Reporting</h2>
-There are many possible bugs. This isn't a v1 program. It is a v0.1 program.<br>
+There are many possible bugs. This isn't a v1 program. It is a v0.1.1 program.<br>
 Anything that doesn't work as expected, report to: <a href='https://github.com/TokynBlast/Javus/issues'>Gihub Javus Issues</a>
 
 <sub>The original purpose of this was to learn Java.</sub>
