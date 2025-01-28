@@ -1,17 +1,15 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us fix a bug :)
 ---
 
-**Screenshot**
-This will helps with trouble shooting and bug fixing.
-An alternative is the following:
-
-**Screenshot replacement**
+**Data**
 - Target: [Wifi, Self, Custom]
 - Data Type: [UDP, TCP, ICMP]
 - Error ID [e.g. e1IO]
 
-**Desktop (please complete the following information):**
+**Desktop (If applicable):**
  - OS: [e.g. Linux]
  - Version [e.g. 2.8.4-Beta]
+
+<sub>If the version is old, and the bug has been patched, the issue will be closed ASAP.</sub>
