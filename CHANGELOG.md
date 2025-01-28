@@ -15,3 +15,9 @@
 #### v0.1.1
 <pre>- Removed protocol type dropdown</pre>
 <img src='imgs/ver/v0.1.1.png' width='35%'>
+
+#### v0.2.0
+<pre>- Added protocol dropdown
+- Added threading
+- Bug fixed
+- Made closing door no longer request bug report</pre>   /////// NEEEEEED ///////
