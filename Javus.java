@@ -290,7 +290,7 @@ public class Javus {
         window.add(IP);
 
         window.add(attack);
-        window.add(dataType);
+        // window.add(dataType);
 
         window.add(BeginEnd);
 
