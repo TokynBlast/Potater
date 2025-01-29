@@ -29,7 +29,7 @@ Self is ::1, the IPv6 of 127.0.0.1<br>
 And WiFi gets the IP of the WiFi, and selects the first one.
 
 ## Min. Requirements
-<pre>- Java 16
+<pre>- Java 7
 - Any JDK</pre>
 
 <sub>The original purpose of this was to learn Java.</sub>
