@@ -1,5 +1,13 @@
 Sometimes, there will be small changes to a version, like spelling fixes, etc.
 Simply put; Small changes that don't pile up or change enough, to release a whole new version.
 Once a version is working, it gets merged to main, for spelling fixes, etc.
-Then, it is finalized, and main is merged to that version, and a new version is made.
+Then, it is finalized, and a new version is made.
 This process repeats.
+
+Hey! For those of you who clone this project, I thank you very much!
+Ever since pyTGM, as long as updates occurr, it stays relevant.
+I would appreciate it if you could donate:
+https://github.com/sponsors/TokynBlast
+Even just a dollar helps. Every proejct I make, I ignite, and then let the community continue the updates.
+This hasn't worked yet, so I would appreciate even a feature request, to increase engagement,
+so I have a reason to continue. The more engagement, the more updates I will release.
