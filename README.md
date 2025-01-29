@@ -1,7 +1,7 @@
 <!--THE LEFT OF THE P IS TERRIBLE!! FINISH WITH A CIRCLE... 😢-->
 <img align='center' src='imgs/logo.png'>
 <p align='center'>
-<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=40&duration=2500&pause=300&color=F7B715&center=true&width=750&height=80&lines=Network+Stressor;Made+in+Java;v0.2.0;🥔🥔 Potato Spam 🥔🥔" alt="Typing SVG" /></a>
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=40&duration=2500&pause=300&color=F7B715&center=true&width=750&height=80&lines=Network+Stressor;Made+in+Java;v0.2.1;🥔🥔 Potato Spam 🥔🥔" alt="Typing SVG" /></a>
 </p>
 
 ## Set Up
