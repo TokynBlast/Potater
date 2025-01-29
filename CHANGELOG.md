@@ -22,7 +22,8 @@
 
 #### v0.2.0
 <pre><img align='right' src='imgs/ver/v0.2.0.png' width='15%'>
+- Changed Javus to Potater
 - Added protocol dropdown
+- Added TCP protocol
 - Added threading
 - Bug fixed
-- Made closing door no longer request bug report   /////// NEEEEEED ///////</pre>
