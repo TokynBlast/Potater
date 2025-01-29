@@ -111,9 +111,36 @@ public class Main {
         } finally {}
     }
 
-    public static void TCP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal){
-
+    public static void TCP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal) {
+    try {
+        // Create a socket to connect to the specified IP and port
+        try (Socket socket = new Socket(ip, 42069)) {
+            byte[] buffer = new byte[PKSize * 1024]; // Convert kB to bytes
+            ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+            Runnable task = () -> {
+                try {
+                    long endTime = System.currentTimeMillis() + Time * 1000; // Convert seconds to milliseconds
+                    OutputStream outputStream = socket.getOutputStream();
+                    while (System.currentTimeMillis() < endTime) {
+                        outputStream.write(buffer);
+                        outputStream.flush();
+                        addText(Terminal, "Sent TCP packet!");
+                        Thread.sleep(Delay);
+                    }
+                } catch (IOException ex) {
+                    addText(Terminal, "Error e3IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt(); // Restore interrupted status
+                }
+            };
+            executor.schedule(task, 0, TimeUnit.MILLISECONDS);
+            executor.awaitTermination(Time + (Delay * 1000), TimeUnit.MILLISECONDS);
+            executor.shutdown();
+        }
+    } catch (IOException ex) {
+        addText(Terminal, "Error e2IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
     }
+}
 
     public static void ICMP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal){
 
