@@ -20,4 +20,4 @@
 <pre>- Added protocol dropdown
 - Added threading
 - Bug fixed
-- Made closing door no longer request bug report</pre>   /////// NEEEEEED ///////
+- Made closing door no longer request bug report   /////// NEEEEEED ///////</pre>
