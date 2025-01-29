@@ -9,10 +9,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 
-// Error formatting: e[error #][exceptioninitials]
+// Error formatting: e[error #][exception initials]
 
 
-public class Javus {
+public class Main {
 
     public static void styleTextField(JTextField textField, Integer x, Integer y, Integer width, Integer height, String tipText, String placeHolder) {
         textField.setBounds(x, y, width, height);
@@ -49,7 +49,7 @@ public class Javus {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
             try (DatagramSocket door = new DatagramSocket(0, localAddress)) {
-                byte[] buffer = "Hello From Javus :) 🥔🥔🥔🥔🥔🥔".getBytes();
+                byte[] buffer = "Hello From Potater :) 🥔🥔🥔🥔🥔🥔🥔🥔".getBytes();
                 InetAddress address;
                 address = InetAddress.getByName(ip);
                 if (address instanceof Inet6Address ipv6Address) {
@@ -91,36 +91,63 @@ public class Javus {
                         long endTime = System.currentTimeMillis() + Time;
                         while (System.currentTimeMillis() < endTime) {
                             door.send(packet);
+                            addText(Terminal, "Sent packet!");
                         }
                     } catch (IOException ex) {
-
-                        addText(Terminal, "Error e1IO: " + ex + "\nPlease fill out a bug report here:\ngithub.com/TokynBlast/Javus/issues");
-
+                        addText(Terminal, "Error e1IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
                     }
                 };
                 if (Delay >= 0) {
                     executor.scheduleAtFixedRate(task, 0, Delay, TimeUnit.MILLISECONDS);
                     executor.awaitTermination(Time + (Delay / 1000), TimeUnit.SECONDS);
                 } else {
-                    throw new IllegalArgumentException("Delay must be non-negative");
+                    throw new IllegalArgumentException("Delay must be non-negative and non-zero");
                 }
                 executor.shutdown();
             } finally {}
         } catch (SocketException ex) {
 
-            addText(Terminal, "Error e2SE: " + ex + "\nPlease fill out a bug report here:\ngithub.com/TokynBlast/Javus/issues");
+            addText(Terminal, "Error e2SE: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
         } finally {}
     }
 
-    public static void TCP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal){
-
+    public static void TCP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal) {
+    try {
+        // Create a socket to connect to the specified IP and port
+        try (Socket socket = new Socket(ip, 42069)) {
+            byte[] buffer = new byte[PKSize * 1024]; // Convert kB to bytes
+            ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+            Runnable task = () -> {
+                try {
+                    long endTime = System.currentTimeMillis() + Time * 1000; // Convert seconds to milliseconds
+                    OutputStream outputStream = socket.getOutputStream();
+                    while (System.currentTimeMillis() < endTime) {
+                        outputStream.write(buffer);
+                        outputStream.flush();
+                        addText(Terminal, "Sent TCP packet!");
+                        Thread.sleep(Delay);
+                    }
+                } catch (IOException ex) {
+                    addText(Terminal, "Error e3IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt(); // Restore interrupted status
+                }
+            };
+            executor.schedule(task, 0, TimeUnit.MILLISECONDS);
+            executor.awaitTermination(Time + (Delay * 1000), TimeUnit.MILLISECONDS);
+            executor.shutdown();
+        }
+    } catch (IOException ex) {
+        addText(Terminal, "Error e2IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
     }
+}
 
     public static void ICMP(String ip, Integer PKSize, Integer Time, Integer Delay, JLabel Terminal){
 
     }
 
     public static void Start(String ip, Integer PKSize, Integer Time, Integer Delay, String Type, JLabel Terminal) throws IOException, InterruptedException {
+        addText(Terminal, "Beginning attack.");
         if (Type.equals("UDP")) {
             UDP(ip, PKSize, Time, Delay, Terminal);
         }
@@ -141,7 +168,7 @@ public class Javus {
 
     public static void addText(JLabel label, String newText) {
         textLines.add(newText);
-        while (textLines.size() > 5) {
+        while (textLines.size() > 11) {
             textLines.remove(0);
         }
         StringBuilder sb = new StringBuilder("<html>");
@@ -152,16 +179,19 @@ public class Javus {
         label.setText(sb.toString());
     }
 
-    
+
     public static void main(String[] args) {
+        System.out.println("Creating Window");
         JFrame window = new JFrame();
-        window.setTitle("Javus - Java Network Stressor - v0.1.0");
+        window.setTitle("Potater - Java Network Stressor - v0.1.1");
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         window.setResizable(false);
         window.setSize(500, 500);
         window.setLayout(null);
+
+        System.out.println("Creating GUI");
 
         JComboBox<String> attack = new JComboBox<>();
         JComboBox<String> dataType = new JComboBox<>();
@@ -179,18 +209,21 @@ public class Javus {
         JLabel TimeLeft = new JLabel();
 
         JCheckBox Fragging = new JCheckBox();
-        JCheckBox TermDebugging = new JCheckBox(); // Print lines to the terminal, as they go inside the terminal inside the Javus window.
+        JCheckBox TermDebugging = new JCheckBox(); // Print lines to the terminal, as they go inside the terminal inside the Potater window.
 
         JLabel term = new JLabel();
+
+        System.out.println("Styling GUI");
+        
         term.setOpaque(true);
-        term.setBounds(50, 250, 400, 200);
+        term.setBounds(50, 244, 400, 194);
         term.setBackground(Color.BLACK);
         term.setForeground(Color.WHITE);
         term.setFont(new Font("Monospaced", Font.PLAIN, 14));
         term.setVerticalAlignment(SwingConstants.BOTTOM);
         term.setHorizontalAlignment(SwingConstants.LEFT);
 
-        
+
         Fragging.setText("Allow fraggmenting?");
 
         PacketSent.setText("Packets Sent: 0");
@@ -212,17 +245,42 @@ public class Javus {
         dataType.addItem("TCP");
         dataType.addItem("ICMP");
 
+        styleTextField(IP,         10,  100, 140, 25, "IP address to send packets to", "192.168.1.1");
+        styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65"); // NEED TO ADD java.net.getMTU() TO PREVENT FRAGMENTING!! (With option for fragmenting if user wants it)
+        styleTextField(Time,       230, 100, 50, 25,  "Amount of time to send packets for in seconds", "60");
+        styleTextField(Delay,      295, 100, 70, 25,  "Delay between sending packets in seconds", "1000");
+
+        System.out.println("Adding actions to GUI");
+
         BeginEnd.addActionListener((ActionEvent e) -> {
             if (BeginEnd.getText().equals("Begin")) {
                 BeginEnd.setText("Stop");
-                try {
-                    Start(IP.getText(), Integer.parseInt(PacketSize.getText()), Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()), dataType.getSelectedItem().toString(), term);
-                } catch (IOException ex) {
-                    addText(term, "Error e3IO: " + ex + "\nPlease provide the above text and a screenshot of Javus here:\nhttps://github.com/TokynBlast/Javus/issues");
-                  
-                } catch (InterruptedException ex) {}
-            }
-            else if (BeginEnd.getText().equals("Stop")) {
+
+                SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        try {
+                            Start(IP.getText(), Integer.parseInt(PacketSize.getText()),
+                                  Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()),
+                                  dataType.getSelectedItem().toString(), term);
+                        } catch (IOException ex) {
+                            addText(term, "Error e4IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
+                        } catch (InterruptedException ex) {
+                            addText(term, "Error e5IE: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        BeginEnd.setText("Begin");
+                        addText(term, "Attack over.");
+                    }
+                    
+                };
+
+                worker.execute();
+            } else if (BeginEnd.getText().equals("Stop")) {
                 BeginEnd.setText("Begin");
                 Stop();
             }
@@ -275,11 +333,7 @@ public class Javus {
             }
         });
 
-
-        styleTextField(IP,         10,  100, 140, 25, "IP address to send packets to", "192.168.1.1");
-        styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65"); // NEED TO ADD java.net.getMTU() TO PREVENT FRAGMENTING!! (With option for fragmenting if user wants it)
-        styleTextField(Time,       230, 100, 50, 25,  "Amount of time to send packets for in seconds", "60");
-        styleTextField(Delay,      295, 100, 70, 25,  "Delay between sending packets in seconds", "1000");
+         System.out.println("Applying GUI");
 
         window.getContentPane().setBackground(new java.awt.Color(247, 183, 21));
         window.add(PacketSize);
@@ -288,14 +342,15 @@ public class Javus {
         window.add(IP);
 
         window.add(attack);
-        // window.add(dataType);
+        window.add(dataType);
 
         window.add(BeginEnd);
 
         window.add(term);
-        
-        addText(term, "Successfully started Javus!");
+
+        addText(term, "Successfully started Potater!");
 
         window.setVisible(true);
+        System.out.println("Potater started! Have fun! :)");
     }
 }
