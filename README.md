@@ -16,8 +16,11 @@ There are attack types and targets.
 ## Bug Reporting
 There are many possible bugs. This isn't a v1 program. It is a v0 program!<br>
 It is DESPERATE for improvment. And, it's crawling with bugs!<br>
-Yes, the maintainer and creator, TokynBlast is aware of the open space, it is intenional for expansions and his vision of the future of potater!<br>
-Anything that doesn't work as expected, report to: <a href='https://github.com/TokynBlast/potater/issues'>Github potater Issues</a>
+Yes, the maintainer and creator, TokynBlast is aware of the open space, it is intenional for expansions and his vision of the future of Potater!<br>
+Anything that doesn't work as expected, report to: <a href='https://github.com/TokynBlast/potater/issues'>Github Potater Issues</a><br><br>
+Reporting bugs is crucial in development.<br>
+It means Potater can get to v1.0.0 a LOT sooner, because I won't be the only one fixing things.<br>
+Heck! Even propose a feature!
 
 ## Use
 <img align='right' src='imgs/ver/v0.2.0.png' width='25%'>
