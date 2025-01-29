@@ -12,7 +12,7 @@ import java.util.ArrayList;
 // Error formatting: e[error #][exception initials]
 
 
-public class Main {
+public class Potater {
 
     public static void styleTextField(JTextField textField, Integer x, Integer y, Integer width, Integer height, String tipText, String placeHolder) {
         textField.setBounds(x, y, width, height);
@@ -243,7 +243,7 @@ public class Main {
         dataType.setBounds(100, 0, 90, 40);
         dataType.addItem("UDP");
         dataType.addItem("TCP");
-        dataType.addItem("ICMP");
+        // dataType.addItem("ICMP");
 
         styleTextField(IP,         10,  100, 140, 25, "IP address to send packets to", "192.168.1.1");
         styleTextField(PacketSize, 165, 100, 50, 25,  "Size of packets to send in kB", "65"); // NEED TO ADD java.net.getMTU() TO PREVENT FRAGMENTING!! (With option for fragmenting if user wants it)
