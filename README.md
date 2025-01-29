@@ -33,6 +33,6 @@ And WiFi gets the IP of the WiFi, and selects the first one.
 <h2>Bug Reporting</h2>
 There are many possible bugs. This isn't a v1 program. It is a v0 program!<br>
 It is DESPERATE for improvment. And, it's crawling with bugs!<br>
-Anything that doesn't work as expected, report to: <a href='https://github.com/TokynBlast/potater/issues'>Gihub potater Issues</a>
+Anything that doesn't work as expected, report to: <a href='https://github.com/TokynBlast/potater/issues'>Github potater Issues</a>
 
 <sub>The original purpose of this was to learn Java.</sub>
