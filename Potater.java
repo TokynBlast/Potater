@@ -52,7 +52,8 @@ public class Potater {
                 byte[] buffer = "Hello From Potater :) 🥔🥔🥔🥔🥔🥔🥔🥔".getBytes();
                 InetAddress address;
                 address = InetAddress.getByName(ip);
-                if (address instanceof Inet6Address ipv6Address) {
+                if (address instanceof Inet6Address) {
+                    Inet6Address ipv6Address = (Inet6Address) address;
                     if (ipv6Address.isLinkLocalAddress() && !ip.contains("%")) {
                         NetworkInterface ni = NetworkInterface.getByInetAddress(address);
                         if (ni != null) {
