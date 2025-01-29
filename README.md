@@ -4,7 +4,11 @@
 </p>
 
 <h2>Set Up</h2>
-You only have to run the program.<br>
+You need a JDK, when making it, I used openJDK<br>
+You also need the Java lang installed.<br>
+
+Then, run `javac javus.java`, with whatever params you want!
+
 There are attack types and targets.
 The targets are <code>Custom</code>, <code>Self</code>, <code>WiFi</code><br>
 Custom defaults at 192.168.1.1, to prevent overloading anything, the data is instantly denied.<br>
