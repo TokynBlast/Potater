@@ -49,7 +49,7 @@ public class Main {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
             try (DatagramSocket door = new DatagramSocket(0, localAddress)) {
-                byte[] buffer = "Hello From Javus :) 🥔🥔🥔🥔🥔🥔".getBytes();
+                byte[] buffer = "Hello From Potater :) 🥔🥔🥔🥔🥔🥔🥔🥔".getBytes();
                 InetAddress address;
                 address = InetAddress.getByName(ip);
                 if (address instanceof Inet6Address ipv6Address) {
@@ -94,7 +94,7 @@ public class Main {
                             addText(Terminal, "Sent packet!");
                         }
                     } catch (IOException ex) {
-                        addText(Terminal, "Error e1IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Javus/issues");
+                        addText(Terminal, "Error e1IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
                     }
                 };
                 if (Delay >= 0) {
@@ -107,7 +107,7 @@ public class Main {
             } finally {}
         } catch (SocketException ex) {
 
-            addText(Terminal, "Error e2SE: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Javus/issues");
+            addText(Terminal, "Error e2SE: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
         } finally {}
     }
 
@@ -156,7 +156,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Creating Window");
         JFrame window = new JFrame();
-        window.setTitle("Javus - Java Network Stressor - v0.1.1");
+        window.setTitle("Potater - Java Network Stressor - v0.1.1");
 
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -182,7 +182,7 @@ public class Main {
         JLabel TimeLeft = new JLabel();
 
         JCheckBox Fragging = new JCheckBox();
-        JCheckBox TermDebugging = new JCheckBox(); // Print lines to the terminal, as they go inside the terminal inside the Javus window.
+        JCheckBox TermDebugging = new JCheckBox(); // Print lines to the terminal, as they go inside the terminal inside the Potater window.
 
         JLabel term = new JLabel();
 
@@ -237,9 +237,9 @@ public class Main {
                                   Integer.valueOf(Time.getText()), Integer.valueOf(Delay.getText()),
                                   dataType.getSelectedItem().toString(), term);
                         } catch (IOException ex) {
-                            addText(term, "Error e4IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Javus/issues");
+                            addText(term, "Error e4IO: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
                         } catch (InterruptedException ex) {
-                            addText(term, "Error e5IE: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Javus/issues");
+                            addText(term, "Error e5IE: " + ex + "<br>Please fill out a bug report here:<br>github.com/TokynBlast/Potater/issues");
                         }
                         return null;
                     }
@@ -321,9 +321,9 @@ public class Main {
 
         window.add(term);
 
-        addText(term, "Successfully started Javus!");
+        addText(term, "Successfully started Potater!");
 
         window.setVisible(true);
-        System.out.println("Javus started! Have fun! :)");
+        System.out.println("Potater started! Have fun! :)");
     }
 }
