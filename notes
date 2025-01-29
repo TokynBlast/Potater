@@ -1,0 +1,5 @@
+Sometimes, there will be small changes to a version, like spelling fixes, etc.
+Simply put; Small changes that don't pile up or change enough, to release a whole new version.
+Once a version is working, it gets merged to main, for spelling fixes, etc.
+Then, it is finalized, and main is merged to that version, and a new version is made.
+This process repeats.
