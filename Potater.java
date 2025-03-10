@@ -49,7 +49,7 @@ public class Potater {
             NetworkInterface networkInterface = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
             InetAddress localAddress = networkInterface.getInetAddresses().nextElement();
             try (DatagramSocket door = new DatagramSocket(0, localAddress)) {
-                byte[] buffer = "Hello From Potater :) 🥔🥔🥔🥔🥔🥔🥔🥔".getBytes();
+                byte[] buffer = "Hello From Potater :) 🥔🥔🥔🥔".getBytes();
                 InetAddress address;
                 address = InetAddress.getByName(ip);
                 if (address instanceof Inet6Address) {
